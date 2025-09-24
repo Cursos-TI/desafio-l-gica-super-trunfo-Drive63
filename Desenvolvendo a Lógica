@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <string.h>
+
+// Estrutura que representa uma carta do Super Trunfo
+typedef struct {
+    char estado[20];
+    char codigo[5];
+    char nomeCidade[30];
+    int populacao;
+    float area;
+    float pib;
+    int pontosTuristicos;
+    float densidadePopulacional;
+    float pibPerCapita;
+} Carta;
+
+int main() {
+    // Cadastro das cartas (dados fictícios)
+    Carta carta1, carta2;
+
+    // ---- Carta 1 ----
+    strcpy(carta1.estado, "São Paulo");
+    strcpy(carta1.codigo, "A01");
+    strcpy(carta1.nomeCidade, "São Paulo");
+    carta1.populacao = 12300000;
+    carta1.area = 1521.0;
+    carta1.pib = 699000000000.0;
+    carta1.pontosTuristicos = 20;
+    carta1.densidadePopulacional = carta1.populacao / carta1.area;
+    carta1.pibPerCapita = carta1.pib / carta1.populacao;
+
+    // ---- Carta 2 ----
+    strcpy(carta2.estado, "Rio de Janeiro");
+    strcpy(carta2.codigo, "B01");
+    strcpy(carta2.nomeCidade, "Rio de Janeiro");
+    carta2.populacao = 6000000;
+    carta2.area = 1200.0;
+    carta2.pib = 300000000000.0;
+    carta2.pontosTuristicos = 15;
+    carta2.densidadePopulacional = carta2.populacao / carta2.area;
+    carta2.pibPerCapita = carta2.pib / carta2.populacao;
+
+    // ---- Escolha do atributo ----
+    char atributoEscolhido[] = "densidadePopulacional"; // altere aqui para "populacao", "area", "pib" ou "pibPerCapita"
+
+    float valor1 = 0, valor2 = 0;
+    int menorVence = 0; // regra especial para densidade
+
+    // ---- Definindo os valores de comparação ----
+    if (strcmp(atributoEscolhido, "populacao") == 0) {
+        valor1 = carta1.populacao;
+        valor2 = carta2.populacao;
+    } 
+    else if (strcmp(atributoEscolhido, "area") == 0) {
+        valor1 = carta1.area;
+        valor2 = carta2.area;
+    }
+    else if (strcmp(atributoEscolhido, "pib") == 0) {
+        valor1 = carta1.pib;
+        valor2 = carta2.pib;
+    }
+    else if (strcmp(atributoEscolhido, "densidadePopulacional") == 0) {
+        valor1 = carta1.densidadePopulacional;
+        valor2 = carta2.densidadePopulacional;
+        menorVence = 1; // regra especial
+    }
+    else if (strcmp(atributoEscolhido, "pibPerCapita") == 0) {
+        valor1 = carta1.pibPerCapita;
+        valor2 = carta2.pibPerCapita;
+    }
+    else {
+        printf("Atributo escolhido invalido!\n");
+        return 0;
+    }
+
+    // ---- Exibindo valores ----
+    printf("Comparacao de cartas (Atributo: %s)\n\n", atributoEscolhido);
+    printf("Carta 1 - %s (%s): %.2f\n", carta1.nomeCidade, carta1.estado, valor1);
+    printf("Carta 2 - %s (%s): %.2f\n", carta2.nomeCidade, carta2.estado, valor2);
+
+    // ---- Comparando ----
+    if ((menorVence == 0 && valor1 > valor2) || (menorVence == 1 && valor1 < valor2)) {
+        printf("Resultado: Carta 1 (%s) venceu!\n", carta1.nomeCidade);
+    } 
+    else if ((menorVence == 0 && valor2 > valor1) || (menorVence == 1 && valor2 < valor1)) {
+        printf("Resultado: Carta 2 (%s) venceu!\n", carta2.nomeCidade);
+    } 
+    else {
+        printf("Resultado: Empate!\n");
+    }
+
+    return 0;
+}
